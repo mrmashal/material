@@ -451,13 +451,22 @@
       throw new Error('A namespace for the date id has to be specified.');
     }
 
+    // return [
+    //   'md',
+    //   this.id,
+    //   namespace,
+    //   date.getFullYear(),
+    //   date.getMonth(),
+    //   date.getDate()
+    // ].join('-');
+    var pd = persianDate(date);
     return [
       'md',
       this.id,
       namespace,
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate()
+      pd.year(),
+      pd.month()-1,
+      pd.date()
     ].join('-');
   };
 

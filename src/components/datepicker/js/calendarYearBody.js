@@ -93,7 +93,7 @@
     var cell = this.buildBlankCell();
 
     // Represent this month/year as a date.
-    var firstOfMonth = new Date(year, month, 1);
+    var firstOfMonth = persianDate([year, month+1, 1]).toDate();
     cell.setAttribute('aria-label', this.dateLocale.monthFormatter(firstOfMonth));
     cell.id = calendarCtrl.getDateId(firstOfMonth, 'year');
 
@@ -152,7 +152,7 @@
    */
   CalendarYearBodyCtrl.prototype.buildCalendarForYear = function(date) {
     // Store rows for the month in a document fragment so that we can append them all at once.
-    var year = date.getFullYear();
+    var year = persianDate(date).year();
     var yearBody = document.createDocumentFragment();
 
     var monthCell, i;
