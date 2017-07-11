@@ -182,7 +182,7 @@
                     formatDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 1, 0, 0);
                 }
 
-                return persianDate(date).format('YYYY/MM/DD'); // $filter('date')(formatDate, 'M/d/yyyy', timezone);
+                return moment(date).format('jYYYY/jMM/jDD'); // $filter('date')(formatDate, 'M/d/yyyy', timezone);
             }
 
             /**
@@ -191,7 +191,7 @@
              * @returns {!Date}
              */
             function defaultParseDate(dateString) {
-                return moment(dateString, 'jYYYY/jMM/jDD').toDate(); // new persianDate(dateString);
+                return moment(dateString, 'jYYYY/jM/jD').toDate();
             }
 
             /**
@@ -218,8 +218,8 @@
              * @returns {string}
              */
             function defaultMonthHeaderFormatter(date) {
-                var pd = persianDate(date);
-                return service.shortMonths[pd.month()-1] + ' ' + pd.year();
+                var pd = moment(date);
+                return service.shortMonths[pd.jMonth()] + ' ' + pd.jYear();
             }
 
             /**
@@ -228,8 +228,8 @@
              * @returns {string}
              */
             function defaultMonthFormatter(date) {
-                var pd = persianDate(date);
-                return service.months[pd.month()-1] + ' ' + pd.year();
+                var pd = moment(date);
+                return service.months[pd.jMonth()] + ' ' + pd.jYear();
             }
 
             /**
@@ -248,12 +248,12 @@
              */
             function defaultLongDateFormatter(date) {
                 // Example: 'Thursday June 18 2015'
-                var pd = persianDate(date);
+                var pd = moment(date);
                 return [
                     service.days[pd.day()],
-                    service.dates[pd.date()],
-                    service.months[pd.month()-1],
-                    pd.year()
+                    service.dates[pd.jDate()],
+                    service.months[pd.jMonth()],
+                    pd.jYear()
                 ].join(' ');
             }
 

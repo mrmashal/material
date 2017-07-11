@@ -128,7 +128,7 @@
         cell.setAttribute('aria-selected', 'true');
       }
 
-      var cellText = this.dateLocale.dates[persianDate(opt_date).date()];
+      var cellText = this.dateLocale.dates[moment(opt_date).jDate()];
 
       if (this.isDateEnabled(opt_date)) {
         // Add a indicator for select, hover, and focus states.
@@ -266,7 +266,7 @@
       var cell = this.buildDateCell(iterationDate);
       row.appendChild(cell);
 
-      iterationDate = persianDate(iterationDate).add('day', 1).toDate();
+      iterationDate = moment(iterationDate).add(1, 'day').toDate();
       dayOfWeek++;
     }
 
@@ -295,6 +295,6 @@
    * @returns {number} The column index of the date in the calendar.
    */
   CalendarMonthBodyCtrl.prototype.getLocaleDay_ = function(date) {
-    return (persianDate(date).day() + (7 - this.dateLocale.firstDayOfWeek)) % 7;
+    return (moment(date).day() + (7 - this.dateLocale.firstDayOfWeek)) % 7;
   };
 })();

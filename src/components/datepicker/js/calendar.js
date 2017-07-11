@@ -459,14 +459,14 @@
     //   date.getMonth(),
     //   date.getDate()
     // ].join('-');
-    var pd = persianDate(date);
+    var pd = moment(date);
     return [
       'md',
       this.id,
       namespace,
-      pd.year(),
-      pd.month()-1,
-      pd.date()
+      pd.jYear(),
+      pd.jMonth(),
+      pd.jDate()
     ].join('-');
   };
 

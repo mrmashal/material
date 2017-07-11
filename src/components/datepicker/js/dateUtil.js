@@ -32,15 +32,13 @@
             isMonthWithinRange: isMonthWithinRange
         };
 
-        // persian-date docs: https://github.com/babakhani/PersianDate
-
         /**
          * Gets the first day of the month for the given date's month.
          * @param {Date} date
          * @returns {Date}
          */
         function getFirstDateOfMonth(date) {
-            return persianDate(date).startOf('month').toDate();
+            return moment(date).startOf('jMonth').toDate();
         }
 
         /**
@@ -49,7 +47,8 @@
          * @returns {number}
          */
         function getNumberOfDaysInMonth(date) {
-            return persianDate(date).daysInMonth();
+            var pd = moment(date);
+            return moment.jDaysInMonth(pd.jYear(), pd.jMonth());
         }
 
         /**
@@ -58,8 +57,8 @@
          * @returns {Date}
          */
         function getDateInNextMonth(date) {
-            var pd = persianDate(date);
-            return persianDate([pd.year(), pd.month() + 1, 1]).toDate();
+            var pd = moment(date);
+            return pd.add(1, 'jMonth').toDate();
         }
 
         /**
@@ -68,8 +67,8 @@
          * @returns {Date}
          */
         function getDateInPreviousMonth(date) {
-            var pd = persianDate(date);
-            return persianDate([pd.year(), pd.month() - 1, 1]).toDate();
+            var pd = moment(date);
+            return pd.add(-1, 'jMonth').toDate();
         }
 
         /**
@@ -79,9 +78,9 @@
          * @returns {boolean}
          */
         function isSameMonthAndYear(d1, d2) {
-            var pd1 = persianDate(d1);
-            var pd2 = persianDate(d2);
-            return pd1.year() === pd2.year() && pd1.month() === pd2.month();
+            var pd1 = moment(d1);
+            var pd2 = moment(d2);
+            return pd1.jYear() === pd2.jYear() && pd1.jMonth() === pd2.jMonth();
         }
 
         /**
@@ -91,9 +90,9 @@
          * @returns {boolean}
          */
         function isSameDay(d1, d2) {
-            var pd1 = persianDate(d1);
-            var pd2 = persianDate(d2);
-            return pd1.year() === pd2.year() && pd1.month() === pd2.month() && pd1.date() == pd2.date();
+            var pd1 = moment(d1);
+            var pd2 = moment(d2);
+            return pd1.jYear() === pd2.jYear() && pd1.jMonth() === pd2.jMonth() && pd1.jDate() == pd2.jDate();
         }
 
         /**
@@ -135,9 +134,9 @@
          */
         function getWeekOfMonth(date) {
             var firstDayOfMonth = getFirstDateOfMonth(date);
-            var pfirstDayOfMonth = persianDate(firstDayOfMonth);
-            var pd = persianDate(date);
-            return Math.floor((pfirstDayOfMonth.day() + pd.date() - 1) / 7);
+            var pfirstDayOfMonth = moment(firstDayOfMonth);
+            var pd = moment(date);
+            return Math.floor((pfirstDayOfMonth.day() + pd.jDate() - 1) / 7);
         }
 
         /**
@@ -147,7 +146,7 @@
          * @returns {Date}
          */
         function incrementDays(date, numberOfDays) {
-            return persianDate(date).add('day', numberOfDays).toDate();
+            return moment(date).add(numberOfDays, 'day').toDate();
         }
 
         /**
@@ -159,7 +158,7 @@
          * @returns {Date}
          */
         function incrementMonths(date, numberOfMonths) {
-            return persianDate(date).add('month', numberOfMonths).toDate();
+            return moment(date).add(numberOfMonths, 'jMonth').toDate();
         }
 
         /**
@@ -172,9 +171,9 @@
          *     chronologically, this number will be negative.
          */
         function getMonthDistance(start, end) {
-            var pstart = persianDate(start);
-            var pend = persianDate(end);
-            return (12 * (pend.year() - pstart.year())) + (pend.month() - pstart.month());
+            var pstart = moment(start);
+            var pend = moment(end);
+            return (12 * (pend.jYear() - pstart.jYear())) + (pend.jMonth() - pstart.jMonth());
         }
 
         /**
@@ -183,7 +182,7 @@
          * @returns {Date}
          */
         function getLastDateOfMonth(date) {
-            return persianDate(date).endOf('month');
+            return moment(date).endOf('jMonth');
         }
 
         /**
@@ -261,9 +260,9 @@
          *     chronologically, this number will be negative.
          */
         function getYearDistance(start, end) {
-            var pstart = persianDate(start);
-            var pend = persianDate(end);
-            return pend.year() - pstart.year();
+            var pstart = moment(start);
+            var pend = moment(end);
+            return pend.jYear() - pstart.jYear();
         }
 
         /**
@@ -303,14 +302,14 @@
          * @param {Date} maxDate
          */
         function isMonthWithinRange(date, minDate, maxDate) {
-            var pminDate = minDate ? persianDate(minDate) : null;
-            var pmaxDate = maxDate ? persianDate(maxDate) : null;
+            var pminDate = minDate ? moment(minDate) : null;
+            var pmaxDate = maxDate ? moment(maxDate) : null;
 
-            var pmonth = persianDate(date).month();
-            var pyear = persianDate(date).year();
+            var pmonth = moment(date).jMonth();
+            var pyear = moment(date).jYear();
 
-            return (!pminDate || pminDate.year() < pyear || pminDate.month() <= pmonth) &&
-                (!pmaxDate || pmaxDate.year() > pyear || pmaxDate.month() >= pmonth);
+            return (!pminDate || pminDate.jYear() < pyear || pminDate.jMonth() <= pmonth) &&
+                (!pmaxDate || pmaxDate.jYear() > pyear || pmaxDate.jMonth() >= pmonth);
         }
     });
 })();
