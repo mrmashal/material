@@ -93,7 +93,7 @@
     var cell = this.buildBlankCell();
 
     // Represent this month/year as a date.
-    var firstOfMonth = moment(year + '/' + month + '/1', 'jYYYY/jM/jD').toDate();
+    var firstOfMonth = moment([year, (month+1), 1].join('/'), 'jYYYY/jM/jD').toDate();
     cell.setAttribute('aria-label', this.dateLocale.monthFormatter(firstOfMonth));
     cell.id = calendarCtrl.getDateId(firstOfMonth, 'year');
 
